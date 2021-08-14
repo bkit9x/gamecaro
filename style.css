@@ -1,0 +1,74 @@
+body{
+    /* font-size: 20pt; */
+    font-family: sans-serif;
+    color: blue;
+}
+#main{
+    display: table;
+    border: 1px solid black;
+}
+.table-row{
+    display: table-row;
+}
+.cell{
+    display: table-cell;
+    background-color: cornflowerblue;
+    border: 1px solid black;
+    height: 50px;
+    width: 50px;
+    position: relative;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.cell input{
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 50px;
+    background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.cell:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.cell input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    display: none;
+    content: "X";
+    text-align: center;
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    top: 25%;
+}
+
+/* Show the checkmark when checked */
+.cell input:checked ~ .checkmark:after {
+    display: inline-block;
+}
+
+input.active:checked ~ .checkmark {
+    background-color: darkorange;
+}
+input.active ~ .checkmark:after {
+    content: "O";
+}
