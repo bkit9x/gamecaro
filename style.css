@@ -1,16 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');body{
-    font-family: 'Permanent Marker';
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Exo+2:wght@100&display=swap');
+body{
+    font-family: 'Exo 2', sans-serif;
     font-size: 16pt;
     background-color: #EDF6E5;
     background-image: url('./source/bg-min1.png');
+    color: mediumblue;
 }
 #container{
     margin: auto;
-    display: block;
-    width: 800px;
+    display: flex;
+    flex-direction: column;
+    width: 1200px;
     text-align: center;
 }
 h1{
+    font-family: 'Permanent Marker';
     color: #D62AD0;
     margin: 0;
     margin-bottom: 15px;
@@ -18,15 +22,20 @@ h1{
     font-size: 24pt;
     font-weight: bold;
 }
+#header{
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
 #main{
-    margin: auto;
-    display: table;
+    display: inline-table;
     border: 1px solid #F38BA0;
 }
 .table-row{
     display: table-row;
 }
 .cell{
+    font-family: 'Permanent Marker';
     display: table-cell;
     background-color: #fae5e5;
     border: 1px solid #F38BA0;
@@ -53,4 +62,18 @@ h1{
 .check-o::after {
     content: "O";
     color: darkorange;
+}
+
+button{
+    padding: 5px 20px;
+    background-color: mediumpurple;
+    color: white;
+    font-size: 14pt;
+    border: 1px solid purple;
+}
+
+@media screen and (min-width: 740px) {
+    #container {
+        flex-direction: row;
+    }
 }

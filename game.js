@@ -4,19 +4,13 @@ class Game {
         this.col = col
         this.user = user
         this.dbRoom = dbRoom
-        this.turn = 'x'
-        this.data = this.createData(row, col)
-        this.broad = this.createBroad(row, col)
-        document.getElementById("main").innerHTML = this.broad
-        var cell = document.getElementsByClassName('cell')
-        for (var i = 0; i < cell.length; i++) {
-            cell[i].onclick = this.checkCell.bind(this, cell[i])
-        }
+        this.resetGame()
+        document.getElementById('reset').onclick = this.resetGame.bind(this)
 
         dbRoom.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data == null) {
-                dbRoom.set({ data: JSON.stringify(this.data), turn: 'x', lastUser: null })
+                this.resetGame()
             }
             else {
                 this.setData(JSON.parse(data.data))
@@ -24,10 +18,30 @@ class Game {
                 if (data.lastUser != null) {
                     this.markCell(document.getElementById("cell_" + data.lastRow + "_" + data.lastCol), data.lastUser)
                 }
+                if (data.win != null) {
+                    if (data.win == this.user)
+                        var win = "Chúc mừng bạn đã thắng! :)"
+                    else
+                        var win = "Thua rồi... :("
+                    document.getElementById('result').innerText = win
+                }
 
             }
 
         });
+
+    }
+
+    resetGame() {
+        console.log("reset")
+        this.createData(this.row, this.col)
+        this.createBroad(this.row, this.col)
+        this.dbRoom.set({ data: JSON.stringify(this.data), turn: 'x' })
+        this.turn = 'x'
+        var cell = document.getElementsByClassName('cell')
+        for (var i = 0; i < cell.length; i++) {
+            cell[i].onclick = this.checkCell.bind(this, cell[i])
+        }
 
     }
 
@@ -52,11 +66,14 @@ class Game {
         if (this.turn == this.user && this.data[row][col] == null) {
             this.markCell(cell, this.user)
 
-            dbRoom.set({ data: JSON.stringify(this.data), turn: this.turn, lastRow: row, lastCol: col, lastUser: this.user })
 
             var end = this.win(row, col, this.user)
             if (end) {
                 alert(user + " Thắng! ")
+                dbRoom.set({ data: JSON.stringify(this.data), turn: this.turn, lastRow: row, lastCol: col, lastUser: this.user, win: this.user })
+            }
+            else {
+                dbRoom.set({ data: JSON.stringify(this.data), turn: this.turn, lastRow: row, lastCol: col, lastUser: this.user })
             }
         }
     }
@@ -127,7 +144,7 @@ class Game {
                 data[r][c] = null
             }
         }
-        return data
+        this.data = data
     }
 
     createBroad(row, col) {
@@ -139,7 +156,7 @@ class Game {
             }
             broad += '</div>'
         }
-        return broad
+        document.getElementById("main").innerHTML = broad
 
     }
 
@@ -148,8 +165,11 @@ class Game {
     }
     setTurn(user) {
         this.turn = user
-        console.log("tới lượt " + user)
-        document.getElementById('turnof').innerText = "tới lượt " + user;
+        if (user == this.user)
+            var turnof = "Đến lượt bạn kìa!"
+        else
+            var turnof = "Chờ xíu nhé!"
+        document.getElementById('turnof').innerText = turnof
     }
 }
 
