@@ -10,7 +10,7 @@ body{
     margin: auto;
     display: flex;
     flex-direction: column;
-    width: 1200px;
+    width: 100%;
     text-align: center;
 }
 h1{
@@ -26,10 +26,14 @@ h1{
     display: inline-block;
     margin-right: 20px;
     margin-bottom: 20px;
+    text-align: center;
+    margin: auto;
 }
 #main{
     display: inline-table;
     border: 1px solid #F38BA0;
+    width: 650px;
+    height: 650px;
 }
 .table-row{
     display: table-row;
