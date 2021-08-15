@@ -15,10 +15,16 @@ class Game {
 
         dbRoom.on('value', (snapshot) => {
             const data = snapshot.val();
-            this.setData(JSON.parse(data.data))
-            this.setTurn(data.turn)
-            if (data.lastUser != null) {
-                this.markCell(document.getElementById("cell_" + data.lastRow + "_" + data.lastCol), data.lastUser)
+            if (data == null) {
+                dbRoom.set({ data: JSON.stringify(this.data), turn: 'x', lastUser: null })
+            }
+            else {
+                this.setData(JSON.parse(data.data))
+                this.setTurn(data.turn)
+                if (data.lastUser != null) {
+                    this.markCell(document.getElementById("cell_" + data.lastRow + "_" + data.lastCol), data.lastUser)
+                }
+
             }
 
         });
