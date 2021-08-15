@@ -1,74 +1,56 @@
-body{
-    /* font-size: 20pt; */
-    font-family: sans-serif;
-    color: blue;
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');body{
+    font-family: 'Permanent Marker';
+    font-size: 16pt;
+    background-color: #EDF6E5;
+    background-image: url('./source/bg-min1.png');
+}
+#container{
+    margin: auto;
+    display: block;
+    width: 800px;
+    text-align: center;
+}
+h1{
+    color: #D62AD0;
+    margin: 0;
+    margin-bottom: 15px;
+    padding: 0;
+    font-size: 24pt;
+    font-weight: bold;
 }
 #main{
+    margin: auto;
     display: table;
-    border: 1px solid black;
+    border: 1px solid #F38BA0;
 }
 .table-row{
     display: table-row;
 }
 .cell{
     display: table-cell;
-    background-color: cornflowerblue;
-    border: 1px solid black;
-    height: 50px;
-    width: 50px;
+    background-color: #fae5e5;
+    border: 1px solid #F38BA0;
+    width: 40px;
+    height: 40px;
     position: relative;
     cursor: pointer;
-    font-size: 22px;
+    font-size: 25px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
-.cell input{
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-}
-.checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 50px;
-    width: 50px;
-    background-color: #eee;
-}
-
-/* On mouse-over, add a grey background color */
-.cell:hover input ~ .checkmark {
-    background-color: #ccc;
-}
-
-/* When the checkbox is checked, add a blue background */
-.cell input:checked ~ .checkmark {
-    background-color: #2196F3;
-}
-
-/* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
-    display: none;
-    content: "X";
     text-align: center;
-    height: 50px;
-    width: 50px;
-    position: absolute;
-    top: 25%;
+    font-weight: bolder;
+    font-size: 20pt;
+    letter-spacing: 0;
+    line-height: 100%;
+    vertical-align:middle;
 }
-
-/* Show the checkmark when checked */
-.cell input:checked ~ .checkmark:after {
-    display: inline-block;
+.check-x::after {
+    content: "X";
+    color: #2196F3;
 }
-
-input.active:checked ~ .checkmark {
-    background-color: darkorange;
-}
-input.active ~ .checkmark:after {
+.check-o::after {
     content: "O";
+    color: darkorange;
 }

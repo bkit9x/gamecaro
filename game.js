@@ -1,33 +1,60 @@
 class Game {
-    constructor(row, col) {
+    constructor(row, col, user, dbRoom) {
         this.row = row
         this.col = col
+        this.user = user
+        this.dbRoom = dbRoom
+        this.turn = 'x'
         this.data = this.createData(row, col)
-        this.x = 1
         this.broad = this.createBroad(row, col)
         document.getElementById("main").innerHTML = this.broad
-        var input = document.getElementsByClassName('check')
-        for (var i = 0; i < input.length; i++) {
-            input[i].onclick = this.checkCell.bind(this, input[i])
+        var cell = document.getElementsByClassName('cell')
+        for (var i = 0; i < cell.length; i++) {
+            cell[i].onclick = this.checkCell.bind(this, cell[i])
         }
+
+        dbRoom.on('value', (snapshot) => {
+            const data = snapshot.val();
+            this.setData(JSON.parse(data.data))
+            this.setTurn(data.turn)
+            if (data.lastUser != null) {
+                this.markCell(document.getElementById("cell_" + data.lastRow + "_" + data.lastCol), data.lastUser)
+            }
+
+        });
 
     }
 
-    checkCell(input) {
-        let row = Number(input.getAttribute("data-row"));
-        let col = Number(input.getAttribute("data-col"));
-        let x = "x"
-        if (this.x != 1) {
-            x = 'o'
-            input.classList.add('active')
+    markCell(cell, user) {
+        let row = Number(cell.getAttribute("data-row"));
+        let col = Number(cell.getAttribute("data-col"));
+        console.log(row, col)
+        if (user == 'o') {
+            cell.classList.add('check-o')
+            this.turn = 'x'
         }
-        this.data[row][col] = x
-        var end = this.win(row, col, x)
-        if (end) {
-            alert(x + " Thắng! ")
+        else {
+            cell.classList.add('check-x')
+            this.turn = 'o'
         }
-        this.x = -this.x
+        this.data[row][col] = user
     }
+
+    checkCell(cell) {
+        let row = Number(cell.getAttribute("data-row"));
+        let col = Number(cell.getAttribute("data-col"));
+        if (this.turn == this.user && this.data[row][col] == null) {
+            this.markCell(cell, this.user)
+
+            dbRoom.set({ data: JSON.stringify(this.data), turn: this.turn, lastRow: row, lastCol: col, lastUser: this.user })
+
+            var end = this.win(row, col, this.user)
+            if (end) {
+                alert(user + " Thắng! ")
+            }
+        }
+    }
+
     win(row, col, x) {
         //check row 
         let startCol = col - 4
@@ -102,7 +129,7 @@ class Game {
         for (let r = 0; r < row; r++) {
             broad += '<div class="table-row">'
             for (let c = 0; c < col; c++) {
-                broad += '<label class="cell"><input type="checkbox" class="check" id="cell_' + r + '_' + c + '" data-row="' + r + '" data-col="' + c + '"><span class="checkmark"></span></label>'
+                broad += '<span class="cell" id="cell_' + r + '_' + c + '" data-row="' + r + '" data-col="' + c + '"></span>'
             }
             broad += '</div>'
         }
@@ -110,5 +137,12 @@ class Game {
 
     }
 
+    setData(data) {
+        this.data = data
+    }
+    setTurn(user) {
+        this.turn = user
+        console.log("tới lượt " + user)
+    }
 }
 
