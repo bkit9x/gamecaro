@@ -7,8 +7,7 @@ var config = {
 };
 firebase.initializeApp(config);
 var room = "room1";
-// var user = prompt('nhập x hoặc o')
-var user = 'x'
+var user = prompt('nhập x hoặc o')
 console.log("bạn chơi " + user)
 const dbRef = firebase.database().ref();
 var dbRoom = dbRef.child(room)
