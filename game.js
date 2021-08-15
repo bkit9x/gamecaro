@@ -149,6 +149,7 @@ class Game {
     setTurn(user) {
         this.turn = user
         console.log("tới lượt " + user)
+        document.getElementById('turnof').innerText = "tới lượt " + user;
     }
 }
 
