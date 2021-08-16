@@ -11,19 +11,33 @@
 <body>
     <div id="container">
         <div id="header">
-            <h1>Game caro</h1>
-            <h5 id="turnof"></h5>
-            <h5 id="result"></h5>
-            <button id="reset">Trò chơi mới</button>
+            <h1>Karo</h1>
+            <h3 id="turnof"></h3>
+            <h3 id="result"></h3>
+
+            <select name="listRoom" id="listRoom">
+            </select>
+            <button id="reset">Sẵn sàng</button>
         </div>
         <div id="main">
         </div>
-
+        <div id="footer">
+            <div id="chat">
+                <!-- <div class="msg"><strong>Kha:</strong> hihi</div> -->
+            </div>
+            <div id="form">
+                <input type="text" name="msg" id="msg" placeholder="Nhập tin nhắn...">
+                <button>gửi</button>
+            </div>
+        </div>
     </div>
 </body>
 <script src="game.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
-<script src="main.js"></script>
+<!-- <script src="main.js"></script> -->
+<script>
+    var game = new Game();
+</script>
 
 </html>

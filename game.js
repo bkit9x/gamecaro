@@ -1,47 +1,114 @@
 class Game {
-    constructor(row, col, user, dbRoom) {
-        this.row = row
-        this.col = col
-        this.user = user
-        this.dbRoom = dbRoom
-        this.resetGame()
+
+    constructor() {
+        this.row = 20
+        this.col = 20
+        this.result = document.getElementById('result')
+        this.listRoom = document.getElementById('listRoom')
+        var config = {
+            apiKey: "AIzaSyCPMNowtEiT0Z3tSFoZwkAOE6KgnkCzNkE",
+            authDomain: "caro-5c82f.firebaseapp.com.firebaseapp.com",
+            databaseURL: "https://caro-5c82f-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "caro-5c82f",
+            storageBucket: "caro-5c82f.appspot.com",
+        };
+        firebase.initializeApp(config);
+        this.user = "Kha";
+
+        this.db = firebase.database().ref()
+        this.room = []
+
+        this.listRoom.onchange = this.selectRooom.bind(this)
+
+
+
         document.getElementById('reset').onclick = this.resetGame.bind(this)
+        this.initRoom()
+        // db.child('game').on('value', (snapshot) => {
+        //     const data = snapshot.val();
+        //     if (data == null) {
+        //         this.resetGame()
+        //     }
+        //     else {
+        //         this.setData(JSON.parse(data.data))
+        //         this.setTurn(data.turn)
+        //         if (data.lastUser != null) {
+        //             this.markCell(document.getElementById("cell_" + data.lastRow + "_" + data.lastCol), data.lastUser)
+        //         }
+        //         if (data.win != null) {
+        //             if (data.win == this.user)
+        //                 var win = "Thắng rồi nhe"
+        //             else
+        //                 var win = "Thua rồi... :("
+        //             result.innerText = win
+        //             result.classList.remove('hidden')
+        //         }
 
-        dbRoom.on('value', (snapshot) => {
-            const data = snapshot.val();
-            if (data == null) {
-                this.resetGame()
-            }
-            else {
-                this.setData(JSON.parse(data.data))
-                this.setTurn(data.turn)
-                if (data.lastUser != null) {
-                    this.markCell(document.getElementById("cell_" + data.lastRow + "_" + data.lastCol), data.lastUser)
+        //     }
+
+        // });
+        // document.getElementById('chonphong').onChange = a;
+
+
+    }
+
+    initRoom() {
+        this.db.child('room').on('value', (snapshot) => {
+            var option = ''
+            snapshot.forEach(function (childSnapshot) {
+                var childData = childSnapshot.val();
+                try {
+                    console.log((new Date().getTime()))
+
+                    if (new Date().getTime() - childData.time > 180) {
+                        option += '<option value="' + childSnapshot.key + '" data-user="0">' + childSnapshot.key + ' (trống)' + '</option>'
+                    }
+                    else {
+                        if (childData.user.o && childData.user.x) {
+                            option += '<option value="' + childSnapshot.key + '" data-user="2">' + childSnapshot.key + ' (đủ người)' + '</option>'
+                        }
+                        else {
+                            option += '<option value="' + childSnapshot.key + '" data-user="1">' + childSnapshot.key + ' (thiếu người)' + '</option>'
+                        }
+                    }
                 }
-                if (data.win != null) {
-                    if (data.win == this.user)
-                        var win = "Chúc mừng bạn đã thắng! :)"
-                    else
-                        var win = "Thua rồi... :("
-                    document.getElementById('result').innerText = win
-                }
-
-            }
-
+                catch (e) { console.error(e) };
+            });
+            this.listRoom.innerHTML = option
         });
+    }
+    selectRooom(game) {
+        console.error(game)
+        console.log(this)
+        game.db.child('room').child(this.value).child('user').get().then((snapshot) => {
+            if (snapshot.exists()) {
+                var snapData = snapshot.val()
+                console.log(snapData)
+                // if (snapData.x ) {
 
+                // }
+            } else {
+                console.log("No data available");
+            }
+            //     if ()
+            //         game.db.child('room').child(this.value).update({ time: new Date().getTime(), user{ o: }})
+            // console.log(this.options[this.selectedIndex].getAttribute('data-user'))
+
+            console.log(this.value)
+        })
     }
 
     resetGame() {
         console.log("reset")
         this.createData(this.row, this.col)
         this.createBroad(this.row, this.col)
-        this.dbRoom.set({ data: JSON.stringify(this.data), turn: 'x' })
+        this.dbRoom.child('game').set({ data: JSON.stringify(this.data), turn: 'x' })
         this.turn = 'x'
         var cell = document.getElementsByClassName('cell')
         for (var i = 0; i < cell.length; i++) {
             cell[i].onclick = this.checkCell.bind(this, cell[i])
         }
+        result.classList.add('hidden')
 
     }
 
@@ -65,16 +132,12 @@ class Game {
         let col = Number(cell.getAttribute("data-col"));
         if (this.turn == this.user && this.data[row][col] == null) {
             this.markCell(cell, this.user)
-
-
-            var end = this.win(row, col, this.user)
-            if (end) {
-                alert(user + " Thắng! ")
-                dbRoom.set({ data: JSON.stringify(this.data), turn: this.turn, lastRow: row, lastCol: col, lastUser: this.user, win: this.user })
+            var win = this.win(row, col, this.user)
+            var data = { data: JSON.stringify(this.data), turn: this.turn, lastRow: row, lastCol: col, lastUser: this.user, time: new Date().getTime() }
+            if (win) {
+                data.push({ win: this.user })
             }
-            else {
-                dbRoom.set({ data: JSON.stringify(this.data), turn: this.turn, lastRow: row, lastCol: col, lastUser: this.user })
-            }
+            dbRoom.child('game').set(data)
         }
     }
 
@@ -133,6 +196,21 @@ class Game {
             }
         }
 
+
+        for (let i = -4; i <= 4; i++) {
+            let count = 0;
+            for (let j = 0; j < 5; j++) {
+                if ((col + i) >= 0 && (col + i + j) < this.col && (row + i) >= 0 && (row + i + j) < this.row) {
+                    if (this.data[row + i + j][col - i - j] == x) {
+                        count++;
+                    }
+                }
+            }
+            if (count == 5) {
+                return true;
+            }
+        }
+
         return null;
     }
     //tạo mảng lưu các nước đi
@@ -170,6 +248,9 @@ class Game {
         else
             var turnof = "Chờ xíu nhé!"
         document.getElementById('turnof').innerText = turnof
+    }
+    setRoom(room) {
+        this.room = room
     }
 }
 
