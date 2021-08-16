@@ -133,6 +133,21 @@ class Game {
             }
         }
 
+        
+        for (let i = -4; i <= 4; i++) {
+            let count = 0;
+            for (let j = 0; j < 5; j++) {
+                if ((col + i) >= 0 && (col + i + j) < this.col && (row + i) >= 0 && (row + i + j) < this.row) {
+                    if (this.data[row + i + j][col + 5 - i - j] == x) {
+                        count++;
+                    }
+                }
+            }
+            if (count == 5) {
+                return true;
+            }
+        }
+
         return null;
     }
     //tạo mảng lưu các nước đi
