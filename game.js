@@ -138,7 +138,8 @@ class Game {
             let count = 0;
             for (let j = 0; j < 5; j++) {
                 if ((col + i) >= 0 && (col + i + j) < this.col && (row + i) >= 0 && (row + i + j) < this.row) {
-                    if (this.data[row + i + j][col + 5 - i - j] == x) {
+                    console.log("i,j, row, col", i,j, row + i, col + 8 - i - j)
+                    if (this.data[row + i][col + 8 - i - j] == x) {
                         count++;
                     }
                 }
