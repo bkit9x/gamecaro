@@ -74,15 +74,20 @@ class Game {
 
     initUser() {
         if (typeof (Storage) !== "undefined") {
-            if (localStorage.getItem("user") == "null") {
+            console.log('store')
+            console.log(localStorage.getItem("user"))
+            if (localStorage.getItem("user") == "null" || localStorage.getItem("user") == null) {
+                console.log('prompt')
                 this.user = prompt('nhập x hoặc o')
                 localStorage.setItem("user", this.user)
             }
             else {
+                console.log('user store')
                 this.user = localStorage.getItem("user")
 
             }
         } else {
+            console.log('use prompt')
             var a = prompt('nhập x hoặc o')
             this.user = a
         }
