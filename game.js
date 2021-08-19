@@ -79,15 +79,11 @@ class Game {
     }
 
     win(row, col, x) {
-        //check row 
-        let startCol = col - 4
-        startCol = startCol >= 0 ? startCol : 0
         let endCol = col + 4
-        endCol = (endCol < this.col) ? endCol : this.col - 1
-        for (let i = startCol; i <= endCol - 4; i++) {
+        for (let i = col - 4; i < col; i++) {
             let count = 0;
             for (let j = 0; j < 5; j++) {
-                if (this.data[row][i + j] == x) {
+                if (this.getData(row, i + j) == x) {
                     count++;
                 }
             }
@@ -97,15 +93,10 @@ class Game {
         }
 
         //check col
-        let startRow = row - 4
-        startRow = startRow >= 0 ? startRow : 0
-        let endRow = row + 4
-        endRow = endRow < this.row ? endRow : this.row - 1
-
-        for (let i = startRow; i <= endRow - 4; i++) {
+        for (let i = row - 4; i < row; i++) {
             let count = 0;
             for (let j = 0; j < 5; j++) {
-                if (this.data[i + j][col] == x) {
+                if (this.getData(i + j, col) == x) {
                     count++;
                 }
             }
@@ -114,18 +105,25 @@ class Game {
             }
         }
 
-        // check col && row
-
-        let start = startCol > startRow ? startCol : startRow
-        let end = endCol < endRow ? endCol : endRow
-
-        for (let i = -4; i <= 4; i++) {
+        // check duong \ 
+        for (let i = 4; i >= 0; i--) {
             let count = 0;
             for (let j = 0; j < 5; j++) {
-                if ((col + i) >= 0 && (col + i + j) < this.col && (row + i) >= 0 && (row + i + j) < this.row) {
-                    if (this.data[row + i + j][col + i + j] == x) {
-                        count++;
-                    }
+                if (this.getData(row - i + j, col - i + j) == x) {
+                    count++;
+                }
+            }
+            if (count == 5) {
+                return true;
+            }
+        }
+
+        // check duong /
+        for (let i = 4; i >= 0; i--) {
+            let count = 0;
+            for (let j = 0; j < 5; j++) {
+                if (this.getData(row - i + j, col + i - j) == x) {
+                    count++;
                 }
             }
             if (count == 5) {
@@ -171,5 +169,11 @@ class Game {
             var turnof = "Chờ xíu nhé!"
         document.getElementById('turnof').innerText = turnof
     }
-}
 
+    getData(row, col) {
+        if (this.data[row])
+            if (this.data[row][col])
+                return this.data[row][col]
+        return undefined
+    }
+}
