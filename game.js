@@ -65,7 +65,8 @@ class Game {
                 var textnode = document.createTextNode(childData)
                 node.appendChild(textnode)
 
-                chatHTML.appendChild(node)
+                chatHTML.prepend(node)
+                document.getElementById("chat").scrollTop = 0
             });
         }, function (error) {
             console.error(error);
@@ -248,7 +249,6 @@ class Game {
             data[time] = game.user + ": " + msg.value
             game.dbChat.set(data)
             msg.value = ""
-            document.getElementById("chat").scrollTop = document.getElementById("chat").scrollHeight
         }
     }
 

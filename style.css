@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Exo+2:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Patrick+Hand+SC&display=swap');
 body{
-    font-family: 'Exo 2';
-    font-size: 14pt;
+    font-family: 'Patrick Hand SC';
+    font-size: 16pt;
     background-color: #EDF6E5;
     background-image: url('./source/bg-min1.png');
-    color: mediumblue;
+    color: darkorange;
 }
 h1{
     font-family: 'Permanent Marker';
@@ -15,7 +15,7 @@ h1{
     font-weight: bold;
 }
 h3{
-    font-size: 16pt;    
+    font-size: 18pt;    
 }
 
 #container{
@@ -28,30 +28,67 @@ h3{
 #header, #footer{
     display: inline-block;
     text-align: center;
-    width: 250px;
+    width: 100%;
     margin: 20px 0;
 }
 #main{
-    margin: 0 20px;
+    margin: 0 30px;
     display: inline-table;
     border-top: 2px solid #F38BA0;
     border-right: 3px solid #F38BA0;
     border-bottom: 3px solid #F38BA0;
     border-left: 2px solid #F38BA0;
     overflow: auto;
-    min-width: 500px;
 }
+.paper {
+    background: #fff;
+    position: relative;
+}
+
+.paper,
+.paper::before,
+.paper::after {
+    box-shadow: 3px 3px 3px rgba(141, 2, 71, 0.514);
+    border: 3px solid #ee4e6e;
+}
+
+.paper::before,
+.paper::after {
+    content: "";
+    position: absolute;
+    height: 95%;
+    width: 99%;
+    background-color: #facbd4;
+}
+
+.paper::before {
+    right: 15px;
+    top: 0;
+    transform: rotate(-2deg);
+    z-index: -1;
+}
+
+.paper::after {
+    top: 5px;
+    right: -5px;
+    transform: rotate(3deg);
+    z-index: -2;
+}
+
 #chat{
     text-align: left;
-    height: 100px;
+    height: 200px;
     overflow:scroll;
 }
+
 #result{
     color: orangered;
 }
+
 .table-row{
     display: table-row;
 }
+
 .cell{
     font-family: 'Permanent Marker';
     display: table-cell;
@@ -66,7 +103,6 @@ h3{
     user-select: none;
     text-align: center;
     font-weight: bolder;
-    font-size: 20pt;
     letter-spacing: 0;
     padding: 0;
     margin: 0;
@@ -90,15 +126,18 @@ h3{
     flex-direction: row;
 }
 
+#msg{
+    width: 80%;
+}
 input, select, button{
-    font-family: 'Exo 2';
-    font-size: 12pt;
+    font-family: 'Patrick Hand SC';
     background-color: #fae5e5;
     height: 30px;
     padding: 3px 10px;
     border: 2px solid rgb(255, 85, 255);
     border-radius: 3px;
     margin-top: 5px;
+    font-size: 16pt;
 }
 
 button:focus, input:focus, select:focus{
@@ -120,9 +159,13 @@ button{
     #container {
         flex-direction: row;
     }
-    /* #chat{
-        height: 500px;
-    } */
+    #chat{
+        height: 90%;
+    }
+    #header, #footer{
+        width: 250px;
+    }
+    
 }
 
 .hidden{
