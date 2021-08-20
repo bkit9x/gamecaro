@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Patrick+Hand+SC&display=swap');
 body{
     font-family: 'Patrick Hand SC';
-    font-size: 16pt;
+    font-size: 12pt;
     background-color: #EDF6E5;
     background-image: url('./source/bg-min1.png');
     color: darkorange;
@@ -11,34 +11,32 @@ h1{
     color: #742ad6;
     margin: 0;
     padding: 0;
-    font-size: 28pt;
+    font-size: 18pt;
     font-weight: bold;
 }
 h3{
-    font-size: 18pt;    
+    font-size: 14pt;    
 }
 
 #container{
     margin: auto;
     display: flex;
     flex-direction: column;
-    width: auto;
     justify-content: center;
 }
 #header, #footer{
     display: inline-block;
     text-align: center;
     width: 100%;
-    margin: 20px 0;
+    margin: 10px 0 0 0;
 }
+
 #main{
-    margin: 0 30px;
+    margin: auto;
+    position: relative;
+    width: 290px;
+    height: 290px;
     display: inline-table;
-    border-top: 2px solid #F38BA0;
-    border-right: 3px solid #F38BA0;
-    border-bottom: 3px solid #F38BA0;
-    border-left: 2px solid #F38BA0;
-    overflow: auto;
 }
 .paper {
     background: #fff;
@@ -48,8 +46,8 @@ h3{
 .paper,
 .paper::before,
 .paper::after {
-    box-shadow: 3px 3px 3px rgba(141, 2, 71, 0.514);
-    border: 3px solid #ee4e6e;
+    box-shadow: 1px 1px 1px rgba(141, 2, 71, 0.514);
+    border: 1px solid #ee4e6e;
 }
 
 .paper::before,
@@ -62,22 +60,22 @@ h3{
 }
 
 .paper::before {
-    right: 15px;
+    right: 8px;
     top: 0;
-    transform: rotate(-2deg);
+    transform: rotate(-1deg);
     z-index: -1;
 }
 
 .paper::after {
     top: 5px;
     right: -5px;
-    transform: rotate(3deg);
+    transform: rotate(2deg);
     z-index: -2;
 }
 
 #chat{
     text-align: left;
-    height: 200px;
+    height: 20vh;
     overflow:scroll;
 }
 
@@ -95,21 +93,20 @@ h3{
     background-color: #fae5e5;
     border-top: 1px solid #F38BA0;
     border-left: 1px solid #F38BA0;
-    width: 30px;
-    height: 30px;
     overflow: visible;
     position: relative;
     cursor: pointer;
     user-select: none;
     text-align: center;
-    font-weight: bolder;
+    /* font-weight: bolder; */
     letter-spacing: 0;
     padding: 0;
     margin: 0;
 }
 .check-x::after, .check-o::after {
     position: absolute;
-    font-size: 16pt;
+    font-size: 8pt;
+    font-weight: bold;
     top: 0;
     left: 25%;
 }
@@ -132,12 +129,11 @@ h3{
 input, select, button{
     font-family: 'Patrick Hand SC';
     background-color: #fae5e5;
-    height: 30px;
+    height: 15px;
     padding: 3px 10px;
     border: 2px solid rgb(255, 85, 255);
     border-radius: 3px;
-    margin-top: 5px;
-    font-size: 16pt;
+    font-size: 10pt;
 }
 
 button:focus, input:focus, select:focus{
@@ -146,7 +142,7 @@ button:focus, input:focus, select:focus{
 
 }
 button{
-    height: 35px;
+    height: 25px;
     background-color: #F08FC0;
     color: white;
     font-weight: bold;
@@ -154,20 +150,144 @@ button{
     border-radius: 3px;
     margin-left: 5px;
 }
+.hidden{
+    display: none;
+}
 
-@media screen and (min-width: 740px) {
+@media screen and (min-width: 600px) {
+    #main{
+        margin: auto;
+        width: 550px;
+        height: 550px;
+    }
+    body, input, select, button{
+        font-size: 14pt;
+    }
+    h1 {
+        font-size: 24pt;
+    }
+    h3{
+        font-size: 16pt;
+    }
+    input, select, button{
+        height: 25px;
+    }
+    button{
+        height: 35px;
+    }    
+    .check-x::after, .check-o::after {
+        font-size: 14pt;
+    }    
+}
+
+@media screen and (min-width: 1000px) {
     #container {
         flex-direction: row;
     }
     #chat{
-        height: 90%;
+        height: 550px;
     }
     #header, #footer{
         width: 250px;
     }
+    #main{
+        margin: 0 30px;
+        width: 550px;
+        height: 550px;
+
+    }
+    body, input, select, button{
+        font-size: 14pt;
+    }
+    h1 {
+        font-size: 24pt;
+    }
+    h3{
+        font-size: 16pt;
+    }
+    input, select, button{
+        height: 25px;
+    }
+    button{
+        height: 35px;
+    }    
+    .check-x::after, .check-o::after {
+        font-size: 16pt;
+    }   
+    .paper,
+    .paper::before,
+    .paper::after {
+        box-shadow: 3px 3px 3px rgba(141, 2, 71, 0.514);
+        border: 3px solid #ee4e6e;
+    }
+    .paper::before {
+        right: 10px;
+        top: 30px;
+        transform: rotate(-2deg);
+        z-index: -1;
+    }
     
+    .paper::after {
+        top: 5px;
+        right: -5px;
+        transform: rotate(3deg);
+        z-index: -2;
+        background-color: #f6d7dd;
+    }    
 }
 
-.hidden{
-    display: none;
+@media screen and (min-width: 1920px) {
+    #container {
+        flex-direction: row;
+    }
+    #chat{
+        height: 900px;
+    }
+    #header, #footer{
+        width: 300px;
+    }
+    #main{
+        margin: 0 40px;
+        width: 900px;
+        height: 900px;
+
+    }
+    body, input, select, button{
+        font-size: 16pt;
+    }
+    h1 {
+        font-size: 28pt;
+    }
+    h3{
+        font-size: 20pt;
+    }
+    input, select, button{
+        height: 35px;
+    }
+    button{
+        height: 45px;
+    }    
+    .check-x::after, .check-o::after {
+        font-size: 20pt;
+    }
+    .paper,
+    .paper::before,
+    .paper::after {
+        box-shadow: 5px 5px 5px rgba(141, 2, 71, 0.514);
+        border: 5px solid #ee4e6e;
+    }
+    .paper::before {
+        right: 10px;
+        top: 30px;
+        transform: rotate(-2deg);
+        z-index: -1;
+    }
+    
+    .paper::after {
+        top: 5px;
+        right: -5px;
+        transform: rotate(3deg);
+        z-index: -2;
+        background-color: #f6d7dd;
+    }    
 }

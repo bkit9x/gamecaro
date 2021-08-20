@@ -137,8 +137,8 @@ class Game {
     }
 
     win(row, col, x) {
-        let endCol = col + 4
-        for (let i = col - 4; i < col; i++) {
+
+        for (let i = col - 4; i <= col; i++) {
             let count = 0;
             for (let j = 0; j < 5; j++) {
                 if (this.getData(row, i + j) == x) {
@@ -151,7 +151,7 @@ class Game {
         }
 
         //check col
-        for (let i = row - 4; i < row; i++) {
+        for (let i = row - 4; i <= row; i++) {
             let count = 0;
             for (let j = 0; j < 5; j++) {
                 if (this.getData(i + j, col) == x) {
